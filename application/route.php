@@ -10,4 +10,8 @@
 // +----------------------------------------------------------------------
 use think\Route;
 
-Route::any('header/index','header/Index/index');
+// 标准TP5路由定义方法
+//Route::请求方式('路由名/:参数','模块名/控制器名/方法名');
+
+//banner部分相关接口
+Route::get('banner/:id','api/v1.Banner/getBanner');

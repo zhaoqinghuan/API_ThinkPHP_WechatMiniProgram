@@ -9,7 +9,6 @@
 namespace app\api\lib\exception;
 
 use think\Exception;
-use Throwable;
 
 /**
  * RestFul API 返回值标准定义类

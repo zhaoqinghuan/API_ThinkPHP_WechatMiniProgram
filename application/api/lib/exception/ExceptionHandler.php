@@ -6,11 +6,12 @@
  * 描  述:
  */
 namespace app\api\lib\exception;
-use Exception;
+use think\Config;
+use think\Exception;
 use think\exception\Handle;
 use think\Log;
 use think\Request;
-use think\Config;
+
 //  自定义全局异常处理类的基类
 class ExceptionHandler extends Handle
 {

@@ -8,9 +8,8 @@
 
 namespace app\api\controller\v1;
 use app\api\lib\exception\BannerMissException;
-use app\api\validate\IDMustBePostiveInt;
 use app\api\model\Banner as BannerModel;
-use think\Exception;
+use app\api\validate\IDMustBePostiveInt;
 
 class Banner
 {
@@ -25,9 +24,8 @@ class Banner
         (new IDMustBePostiveInt())->goCheck();
         $banner = BannerModel::getBannerByID($id);
         if(!$banner){
-            //throw new BannerMissException();
-            throw new Exception('我的服务器内部出现了错误= =');
+            throw new BannerMissException();
         }
-        return $banner;
+        return json($banner);
     }
 }

@@ -14,4 +14,6 @@ use think\Route;
 //Route::请求方式('路由名/:参数','模块名/控制器名/方法名');
 
 //banner部分相关接口
-Route::get('banner/:id','api/v1.Banner/getBanner');
+//Route::get('banner/:id','api/v1.Banner/getBanner');
+//将URL修改为标准的RestFulAPI接口
+Route::get('api/v1/banner/:id','api/v1.Banner/getBanner');

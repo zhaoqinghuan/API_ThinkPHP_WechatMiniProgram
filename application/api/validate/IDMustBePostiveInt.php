@@ -14,7 +14,8 @@ class IDMustBePostiveInt extends BaseValidate
 {
     protected $rule =[
         //  自定义的验证规则直接在这里调用使用即可
-      'id' => 'require|isPositiveInteger'
+      'id' => 'require|isPositiveInteger',
+      'num' => 'in:1,2,3'
     ];
 
     /**

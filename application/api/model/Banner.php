@@ -23,15 +23,15 @@ class Banner
      */
     public static function getBannerByID($id)
     {
-        //  模拟系统出现的错误
-        try{
-            1 / 0;
-        }
-        catch (Exception $ex){
-            //TODO: 进行异常处理 如：记录日志
-            throw $ex;
-        }
+//          模拟系统出现的错误
+//        try{
+//            1 / 0;
+//        }
+//        catch (Exception $ex){
+//            //TODO: 进行异常处理 如：记录日志
+//            throw $ex;
+//        }
         //  模拟用户输入产生的错误
-        return null;
+        //return null;
     }
 }

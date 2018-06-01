@@ -7,7 +7,7 @@
  */
 namespace app\api\lib\exception;
 use think\Config;
-use think\Exception;
+use Exception;
 use think\exception\Handle;
 use think\Log;
 use think\Request;

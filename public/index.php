@@ -17,3 +17,10 @@ define('APP_PATH', __DIR__ . '/../application/');
 define('LOG_PATH',__DIR__.'/../log/');
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';
+
+ // 重写错误日志记录方法
+\think\Log::init([
+    'type' => 'File',    //  重写错误日志记录的方法
+    'path' => LOG_PATH.'sql_Log/',//  重写错误日志记录的记录位置
+    'level' => ['sql']  //  重写错误日志记录的级别
+]);

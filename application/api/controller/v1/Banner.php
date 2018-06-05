@@ -22,10 +22,21 @@ class Banner
     public function getBanner($id)
     {
         (new IDMustBePostiveInt())->goCheck();
-        $banner = BannerModel::getBannerByID($id);
+
+        //  静态方法调用Banner模型下内置的Get方法获取对应的数据
+        $banner = BannerModel::get($id);
+
+        //  模型实例化对象调用方法
+        $banner = new BannerModel();
+        $banner = $banner->get($id);
+
+        //$banner = BannerModel::getBannerByID($id);
         if(!$banner){
             throw new BannerMissException();
         }
-        return json($banner);
+        //  因为BannerModel调用方法后返回的是一个模型对象所以这里无需再进行json转化可直接抛出
+        return $banner;
+        //return json($banner);
+
     }
 }

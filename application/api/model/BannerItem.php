@@ -2,9 +2,8 @@
 
 namespace app\api\model;
 
-use think\Model;
 
-class BannerItem extends Model
+class BannerItem extends BaseModel
 {
     //  自定义当前模型文件需要隐藏的字段
     protected $hidden = ['delete_time','update_time','id','banner_id','img_id',''];

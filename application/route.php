@@ -16,4 +16,9 @@ use think\Route;
 //banner部分相关接口
 //Route::get('banner/:id','api/v1.Banner/getBanner');
 //将URL修改为标准的RestFulAPI接口
-Route::get('api/v1/banner/:id','api/v1.Banner/getBanner');
+//Route::get('api/v1/banner/:id','api/v1.Banner/getBanner');
+
+//  获取首页轮播图接口
+Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');
+//  获取首页主题接口
+Route::get('api/:version/theme','api/:version.Theme/getSimpleList');

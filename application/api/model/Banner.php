@@ -11,10 +11,8 @@ namespace app\api\model;
 use think\Db;
 use think\Exception;
 
-//  引入Model类
-use think\Model;
 //  继承Model类
-class Banner extends Model
+class Banner extends BaseModel
 {
 
     //  重写类对象下的方法指定当前模型类对应的数据表，

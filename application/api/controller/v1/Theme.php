@@ -8,13 +8,32 @@
 
 namespace app\api\controller\v1;
 
-
 use app\api\lib\exception\ThemeException;
 use app\api\validate\IDCollection;
-//  引入模型类
 use app\api\model\Theme as ThemeModel;
+use app\api\validate\IDMustBePostiveInt;
+
 class Theme
 {
+    /**
+     *  创建根据主题ID获取相关商品的方法
+     *  @url    /theme/:id
+     *  @http   GET
+     *  @id     对应的主题id
+     */
+    public function getComplexOne($id)
+    {
+        //  对参数进行正整数校验
+        (new IDMustBePostiveInt())->goCheck();
+        //  直接调用模型文件中的获取数据的方法
+        $theme = ThemeModel::getThemeWithProducts($id);
+        //  判断是否能够正常获取数据，
+        if(!$theme){
+            throw new ThemeException();
+        }
+        return $theme;
+    }
+
     /**
      * 创建获取首页主题的方法
      * @url         /theme?ids=id1,id2,id3..

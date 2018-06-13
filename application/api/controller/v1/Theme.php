@@ -49,7 +49,9 @@ class Theme
         //  调用模型进行模型关联并查询相关数据
         $result = ThemeModel::getThemeByID($ids);
         //  如果出现异常调用异常处理类
-        if(!$result){
+        //if(!$result){
+        //  修改错误判断条件为框架支持的判断数据集是否为空的方法
+        if($result->isEmpty()){
             throw new ThemeException();
         }
         return $result;

@@ -25,3 +25,6 @@ Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');
 Route::get('api/:version/theme/:id','api/:version.Theme/getComplexOne');
 //  获取首页主题接口
 Route::get('api/:version/theme','api/:version.Theme/getSimpleList');
+//  获取最新商品接口
+Route::get('api/:version/product/recent','api/:version.Product/getRecent');
+

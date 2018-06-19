@@ -17,6 +17,18 @@ class Product extends BaseModel
         'delete_time','create_time','update_time','pivot',
         'from','main_img_id','category_id'
     ];
+    /**
+     *  自定义静态方法根据商品分类ID查询对应的商品信息
+     *  @parame $id
+     */
+    public static function getProductsByCategoryID($categoryID)
+    {
+        //  直接调用框架提供的查询方法进行条件查询
+        //  查询商品表中category_id等于传递进来的分类ID的所有商品
+        $products = self::where('category_id','=',$categoryID)
+            ->select();
+        return $products;
+    }
 
     /**
      *  自定义静态方法查询当前模型下指定条数的商品信息

@@ -26,5 +26,9 @@ Route::get('api/:version/theme/:id','api/:version.Theme/getComplexOne');
 //  获取首页主题接口
 Route::get('api/:version/theme','api/:version.Theme/getSimpleList');
 //  获取最新商品接口
-Route::get('api/:version/product/recent','api/:version.Product/getRecent');
+Route::get('api/:version/products/recent','api/:version.Product/getRecent');
+//  获取所有分类列表
+Route::get('api/:version/category/all','api/:version.Category/getAllCategories');
+//  根据分类信息查找对应的商品信息
+Route::get('api/:version/products/by_category','api/:version.Product/getAllInCategory');
 

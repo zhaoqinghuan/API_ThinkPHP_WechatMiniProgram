@@ -12,9 +12,33 @@ namespace app\api\controller\v1;
 use app\api\validate\CountValidate;
 use app\api\model\Product as ProductModel;
 use app\api\lib\exception\ProductException;
+use app\api\validate\IDMustBePostiveInt;
 
 class Product
 {
+    /**
+     *  分类关联的商品信息
+     *  @url    /product/by_category
+     *  @http   GET
+     *  @id     对应的当前商品分类主键
+     */
+    public function getAllInCategory($id)
+    {
+        //  参数校验是否为int类型正整数
+        (new IDMustBePostiveInt())->goCheck();
+        //  调用模型下的静态方法获取查询结果
+        $products = ProductModel::getProductsByCategoryID($id);
+        //  对结果进行判空验证
+        if($products->isEmpty()){
+            //  如果结果是空抛出异常
+            throw new ProductException();
+        }
+        //  对结果中的summer字段进行隐藏
+        $Products = $products->hidden(['summary']);
+        //  向客户端返回查询结果
+        return $Products;
+    }
+
     /**
      *  自定义商品信息接口
      *  @url    /product/recent

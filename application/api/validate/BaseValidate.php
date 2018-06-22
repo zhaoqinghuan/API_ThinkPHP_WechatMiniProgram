@@ -41,6 +41,24 @@ class BaseValidate extends Validate
             return true;
         }
     }
+    /**
+     * 自定义参数不能为空验证规则
+     * @field 需要进行校验的字段名
+     * @value 需要进行校验的字段值
+     * @rule  需要进行校验的验证规则
+     * @data  数据集合
+     */
+    protected function isNotEmpty($value,$rule='',$data='',$field='')
+    {
+        if(empty($value)){
+            //  判断如果当前字段不为空
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
 
     /**
      * 自定义正整数验证规则

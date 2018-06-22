@@ -31,4 +31,7 @@ Route::get('api/:version/products/recent','api/:version.Product/getRecent');
 Route::get('api/:version/category/all','api/:version.Category/getAllCategories');
 //  根据分类信息查找对应的商品信息
 Route::get('api/:version/products/by_category','api/:version.Product/getAllInCategory');
+//  获取令牌接口
+//  这里使用post请求方法因为客户端传递的code的特殊性直接放在url中不安全，
+Route::post('api/:version/token/user','api/:version.Token/getToken');
 

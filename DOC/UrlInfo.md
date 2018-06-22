@@ -9,3 +9,5 @@
 
 `/api/:version/category/all  - 获取所有的商品分类信息`<br>
 `/api/:version/products/by_category?id=:id  - 根据当前的分类信息获取对应的商品信息`<br>
+
+`/api/:version/token/user  - 获取当前用户的token令牌`<br>

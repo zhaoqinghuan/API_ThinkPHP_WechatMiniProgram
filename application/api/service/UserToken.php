@@ -45,6 +45,7 @@ class UserToken extends BaseService
         $result = $this->curl_get($this->wxLoginUrl);
         //  因为上一步获取到的结果是一个字符串这里用json_decode将其转换为对象
         $wxResult = json_decode($result,true);
+
         //  对微信获取的结果进行判断可能存在为空的问题
         if(empty($wxResult)){
             //  这里直接使用系统的Exception是因为自定义异常处理会将其返回给客户端，系统的则会将其记录为日志。

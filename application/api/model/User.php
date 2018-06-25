@@ -14,7 +14,8 @@ class User extends BaseModel
     //  根据openid查询用户相关信息
     public static function getByOpenID($openid)
     {
-        $user = self::where('openid','=','openid')->find();
+        //$user = self::where('openid','=','openid')->find();
+        $user = self::where('openid','=',$openid)->find();
         return $user;
     }
 }

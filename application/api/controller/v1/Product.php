@@ -17,6 +17,25 @@ use app\api\validate\IDMustBePostiveInt;
 class Product
 {
     /**
+     *  根据商品ID获取商品的详细信息
+     *  @url    /
+     *  @http   GET
+     *  @param $id
+     */
+    public function getOne($id)
+    {
+        //  参数校验
+        (new IDMustBePostiveInt())->goCheck();
+        //  调用模型文件下的查询方法进行关联模型的查询操作
+        $product = ProductModel::getProductDetail($id);
+        //  判空异常处理
+        if(!$product){
+            //  因为默认的异常处理信息中能够解决当前接口的异常问题因此无需传递参数覆盖
+            throw new ProductException();
+        }
+        return $product;
+    }
+    /**
      *  分类关联的商品信息
      *  @url    /product/by_category
      *  @http   GET

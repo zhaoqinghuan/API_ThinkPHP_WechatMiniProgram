@@ -41,3 +41,8 @@ Route::get('api/:version/category/all','api/:version.Category/getAllCategories')
 //  这里使用post请求方法因为客户端传递的code的特殊性直接放在url中不安全，
 Route::post('api/:version/token/user','api/:version.Token/getToken');
 
+//  用户创建或更新地址信息方法
+Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');
+
+
+

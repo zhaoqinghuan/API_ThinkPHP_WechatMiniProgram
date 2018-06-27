@@ -14,6 +14,46 @@ use think\Request;
 
 class BaseValidate extends Validate
 {
+    /**
+     *  自定义验证手机号码的验证规则
+     */
+    protected function isMobile($value)
+    {
+        $rule = '^1(3|4|5|7|8)[0-9]\d{8}$^';
+        $result = preg_match($rule, $value);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *  根据验证规则获取客户端传递过来的参数
+     *  @param  $arrays  array 客户端传递过来的所有参数
+     *  @return $newArray array 按照过滤规则过滤后的参数
+     */
+    public function getDataByRule($arrays)
+    {
+        //  判断参数中是否包含user_id或uid
+        if(array_key_exists('user_id',$arrays) || array_key_exists('uid',$arrays))
+        {
+            //  这里直接过滤掉客户端传递过来的所有包含user_id或uid的参数，
+            //  这两个参数只能通过令牌获取。
+            throw new ParameterException([
+                'msg' => '参数中包含非法参数user_id或uid'
+            ]);
+        }
+        //  定义一个新数组用来存储验证通过后的结果
+        $newArray = [];
+        //  根据验证规则获取数据，只将符合规则的参数存储到数据库中
+        foreach ($this->rule as $key=>$value){
+            $newArray[$key] = $arrays[$key];
+        }
+        return $newArray;
+    }
+
+
     //  公用的公共验证器校验方法
     public function goCheck()
     {

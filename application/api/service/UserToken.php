@@ -6,6 +6,7 @@
  * 描  述:
  */
 namespace app\api\service;
+use app\api\lib\enum\ScopeEnum;
 use app\api\lib\exception\TokenException;
 use app\api\lib\exception\WeChatException;
 use think\Exception;
@@ -119,7 +120,9 @@ class UserToken extends BaseService
         //  封装相关参数到cachedValue中去
         $cachedValue = $wxResult;
         $cachedValue['uid'] = $uid;
-        $cachedValue['scope'] = 16;
+        //  接口用户的正常权级
+        $cachedValue['scope'] = ScopeEnum::UserScope;
+        //  $cachedValue['scope'] = 15;
         return $cachedValue;
     }
     /**

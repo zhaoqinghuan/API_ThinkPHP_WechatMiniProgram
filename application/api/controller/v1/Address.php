@@ -6,13 +6,48 @@
  * 描  述:
  */
 namespace app\api\controller\v1;
+use app\api\lib\enum\ScopeEnum;
+use app\api\lib\exception\ForbiddenException;
 use app\api\lib\exception\SuccessMessage;
+use app\api\lib\exception\TokenException;
 use app\api\lib\exception\UserException;
 use app\api\model\User as UserModel;
 use app\api\validate\AddressNew;
 use app\api\service\UserToken as TokenService;
-class Address
+use think\Controller;
+
+class Address extends Controller
 {
+    //  自定义前置操作的设置
+    protected $beforeActionList = [
+        //  前置方法名
+        'checkPrimaryScope' => [
+            //  需要使用前置方法的方法名
+            'only' => 'createOrUpdateAddress'
+        ]
+    ];
+
+    //  自定义前置方法验证当前用户的身份权级
+    protected function checkPrimaryScope()
+    {
+        //  使用Service层中的getCurrentTokenVar方法获取缓存中当前用户的scope值
+        $scope = TokenService::getCurrentTokenVar('scope');
+        //  先判断scope是否存在
+        if($scope){
+            //  当前用户的Scope至少需要大于UserScope
+            if($scope >= ScopeEnum::UserScope){
+                return true;
+            }else{
+                //  抛出权级无法进行此操作异常
+                throw new ForbiddenException();
+            }
+        }else{
+            //  如果Scope不存在说明当前客户端可能Token已过期，抛出Token过期异常
+            throw new TokenException();
+        }
+    }
+
+
     //  创建/更新地址控制器
     public function createOrUpdateAddress()
     {

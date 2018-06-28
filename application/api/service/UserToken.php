@@ -24,6 +24,7 @@ class UserToken extends BaseService
     protected $wxAppId;
     protected $wxAppSecret;
     protected $wxLoginUrl;
+
     /**
      *  构造函数将wxLoginUrl拼写完整
      *  先从配置文件中将相关信息取出
@@ -38,6 +39,7 @@ class UserToken extends BaseService
         $this->wxLoginUrl = sprintf(config('wxSetting.login_url'),
             $this->wxAppId,$this->wxAppSecret,$this->code);
     }
+
     /**
      *  封装调用微信服务器获取token然后将获取到的信息进行存储并加密返回
      */

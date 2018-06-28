@@ -7,12 +7,61 @@
  */
 
 namespace app\api\service;
+use app\api\lib\enum\ScopeEnum;
+use app\api\lib\exception\ForbiddenException;
 use app\api\lib\exception\TokenException;
 use think\Cache;
 use think\Exception;
 use think\Request;
+
 class BaseService
 {
+    /**
+     *  自定义权限管理前置操作的方法封装到Service
+     *  只有用户能访问的权限
+     */
+    public static function needExclusiveScope()
+    {
+        //  使用Service层中的getCurrentTokenVar方法获取缓存中当前用户的scope值
+        $scope = self::getCurrentTokenVar('scope');
+        //  先判断scope是否存在
+        if($scope){
+            //  此接口只能由用户来执行调用，因此这里的权级只能等于UserScope
+            if($scope == ScopeEnum::UserScope){
+                return true;
+            }else{
+                //  抛出权级无法进行此操作异常
+                throw new ForbiddenException();
+            }
+        }else{
+            //  如果Scope不存在说明当前客户端可能Token已过期，抛出Token过期异常
+            throw new TokenException();
+        }
+    }
+
+    /**
+     *  自定义权限管理前置操作的方法封装到Service
+     *  用户和管理员都能访问的权限
+     */
+    public static function needPrimaryScope()
+    {
+        //  使用Service层中的getCurrentTokenVar方法获取缓存中当前用户的scope值
+        $scope = self::getCurrentTokenVar('scope');
+        //  先判断scope是否存在
+        if($scope){
+            //  此接口只能由用户或管理员来执行调用，因此这里的权级只能大于等于UserScope
+            if($scope >= ScopeEnum::UserScope){
+                return true;
+            }else{
+                //  抛出权级无法进行此操作异常
+                throw new ForbiddenException();
+            }
+        }else{
+            //  如果Scope不存在说明当前客户端可能Token已过期，抛出Token过期异常
+            throw new TokenException();
+        }
+    }
+
     /**
      *  通用的根据Token兑换存储在缓存中数据的方法
      *  需要传递参数根据参数返回对应的数据

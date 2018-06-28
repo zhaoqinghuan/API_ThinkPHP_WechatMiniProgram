@@ -44,6 +44,9 @@ Route::post('api/:version/token/user','api/:version.Token/getToken');
 //  用户创建或更新地址信息方法
 Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');
 
+//  用户创建订单接口
+Route::post('api/:version/order','api/:version.Order/placeOrder');
+
 
 
 

@@ -10,6 +10,7 @@ use app\api\lib\exception\OrderException;
 use app\api\lib\exception\UserException;
 use app\api\model\Product;
 use app\api\model\UserAddress;
+use think\Db;
 use think\Exception;
 
 class OrderService extends BaseService
@@ -51,6 +52,8 @@ class OrderService extends BaseService
      */
     private function createOrder($snap)
     {
+        //  开启事务
+        Db::startTrans();
         //  异常处理
         try{
             //  获取订单编号
@@ -80,6 +83,8 @@ class OrderService extends BaseService
             $orderProduct = new \app\api\model\OrderProduct();
             //  调用批量存储方法进行订单数据存储
             $orderProduct->saveAll($this->oProducts);
+            //  执行事务
+            Db::commit();
             //  返回数据
             return[
                 'order_no' => $orderNo,
@@ -87,6 +92,8 @@ class OrderService extends BaseService
                 'create_time' => $create_time
             ];
         }catch (Exception $ex){
+            //  抓取到异常将事务回滚
+            Db::rollback();
             //  如果抓取到异常直接将异常抛出
             throw $ex;
         }

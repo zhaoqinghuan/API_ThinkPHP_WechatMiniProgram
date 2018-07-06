@@ -16,7 +16,26 @@ use think\Request;
 
 class BaseService
 {
+
     /**
+     *  检测当前发起操作的用户和当前数据的创建用户是否是同一个人
+     */
+    public static function isValidOperate($checkedUID)
+    {
+        //  对参数进行判空
+        if(!$checkedUID){
+            throw new Exception('被检测的用户UID不能为空');
+        }
+        //  获取当前请求发起人的UID
+        $currentOperateUID = self::getCurrentUid();
+        //  对当前请求的UID和传递过来的UID进行对比
+        if($currentOperateUID == $checkedUID){
+            return true;
+        }
+        return false;
+    }
+
+        /**
      *  自定义权限管理前置操作的方法封装到Service
      *  只有用户能访问的权限
      */

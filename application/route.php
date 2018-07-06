@@ -47,6 +47,8 @@ Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress')
 //  用户创建订单接口
 Route::post('api/:version/order','api/:version.Order/placeOrder');
 
+//  微信支付预订单发起接口
+Route::post('api/:version/pay/pre_order','api/:version.Pay/getPreOrder');
 
 
 

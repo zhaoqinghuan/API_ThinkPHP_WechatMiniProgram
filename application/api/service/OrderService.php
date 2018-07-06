@@ -8,6 +8,7 @@
 namespace app\api\service;
 use app\api\lib\exception\OrderException;
 use app\api\lib\exception\UserException;
+use app\api\model\OrderProduct;
 use app\api\model\Product;
 use app\api\model\UserAddress;
 use think\Db;
@@ -169,6 +170,27 @@ class OrderService extends BaseService
         }
         //  用模型查询出来的结果是对象将其转换为数组，以数组形式返回地址信息
         return $userAddress->toArray();
+    }
+
+    /**
+     *  公有的调用订单商品库存检测方法
+     *  1.根据orderID来查询oProducts和products
+     *  2.并调用getOrderStatus的方法
+     */
+    public function checkOrderStock($orderID)
+    {
+        //  调用Order_Product表的模型文件执行查询操作
+        $oProducts = OrderProduct::where('order_id','=',$orderID)
+            ->select();
+        //  将oProducts结果赋值给成员变量
+        $this->oProducts = $oProducts;
+
+        //  获取Products结果（直接调用成员方法）并赋值给成员变量
+        $this->products = $this->getProductsByOrder($oProducts);
+
+        //  调用获取当前订单商品的信息方法(getOrderStatus)
+        $status = $this->getOrderStatus();
+        return $status;
     }
 
     /**

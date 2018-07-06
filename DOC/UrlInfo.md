@@ -14,3 +14,6 @@
 `/api/:version/token/user  - 获取当前用户的token令牌`<br>
 
 `/api/:version/address  - 用户提交个人地址信息`<br>
+
+`/api/v1/order - 订单提交`<br>
+`/api/v1/pay/pre_order - 发起微信支付请求`<br>

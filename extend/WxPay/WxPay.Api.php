@@ -2,6 +2,7 @@
 require_once "WxPay.Exception.php";
 require_once "WxPay.Config.php";
 require_once "WxPay.Data.php";
+require_once "WxPay.Notify.php";
 
 /**
  * 
@@ -537,8 +538,12 @@ class WxPayApi
 			curl_setopt($ch,CURLOPT_PROXYPORT, WxPayConfig::CURL_PROXY_PORT);
 		}
 		curl_setopt($ch,CURLOPT_URL, $url);
-		curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,TRUE);
-		curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,2);//严格校验
+//		curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,TRUE);
+//		curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,2);//严格校验
+        //关闭证书严格校验
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+
 		curl_setopt($ch,CURLOPT_USERAGENT, $ua); 
 		//设置header
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);

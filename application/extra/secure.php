@@ -7,5 +7,5 @@
  */
 return [
     //  自定义字符串作为加密盐
-    'token_salt' =>'huiqinsoft'
+    'token_salt' =>'huiqinsoft',
 ];

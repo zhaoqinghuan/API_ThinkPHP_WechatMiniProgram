@@ -56,6 +56,12 @@ function curl_post($url,array $params = array()){
     return ($data);
 }
 
+/**
+ *  模拟post请求并传递数据发送方法
+ *  @param string   $url        get请求地址
+ *  @param array    $rawData    需要传递的字符串
+ *  @return mixed
+ */
 function curl_post_raw($url,$rawData){
     $ch = curl_init();
     curl_setopt($ch,CURLOPT_URL,$url);
@@ -67,7 +73,7 @@ function curl_post_raw($url,$rawData){
     curl_setopt($ch,CURLOPT_POSTFIELDS,$rawData);
     curl_setopt($ch,CURLOPT_HTTPHEADER,
         array(
-            'Content-Type: text'
+            'Content-Type: text'    //  此处标明传递的不是Json而是普通字符串。
         )
     );
     $data = curl_exec($ch);

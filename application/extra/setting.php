@@ -9,7 +9,7 @@
 
 return [
     //  自定义基础图片路径
-    'img_prefix' => 'http://api.huiqinsoft.cn/images',
+    'img_prefix' => 'http://api.huiqinsoft.com/images',
     //  自定义缓存过期时间
     'token_expire_in' => 7200,
 ];

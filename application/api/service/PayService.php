@@ -52,6 +52,8 @@ class PayService extends BaseService
         if(!$status['pass']){
             return $status;
         }
+        //  调用生成微信支付预订单信息方法
+        return $this->makeWxPreOrder($status['orderPrice']);
     }
 
     //  生成微信支付的预订单信息
@@ -79,10 +81,12 @@ class PayService extends BaseService
         //  当前支付发起用户的OpenID
         $wxOrderDate->SetOpenid($openid);
         //  设置微信支付的回调地址
-        $wxOrderDate->SetNotify_url('');
+        $wxOrderDate->SetNotify_url(config('wxSetting.pay_back_url'));
+        //  调用当前类下的getPaySignature方法
+        return $this->getPaySignature($wxOrderDate);
     }
 
-    //  用生成好的预订单信息调用微信支付的预订单接口
+    //  用生成好的预订单信息调用微信支付sdk的预订单接口
     private function getPaySignature($wxOrderDate)
     {
         //  调用WxPay.api.php下的unifiedOrder方法实现调用微信支付预订单接口
@@ -95,6 +99,53 @@ class PayService extends BaseService
             Log::record($wxOrder,'error');
             Log::record('获取预订单支付订单失败','eror');
         }
+        //  调用处理$wxOrder下的prepay_id字段信息的方法
+        $this->recordPreOrder($wxOrder);
+        //  调用生成小程序支付参数的方法将参数返回给小程序
+        $signature = $this->sign($wxOrder);
+
+        //return $wxOrder;    //  将微信的返回结果返回到客户端。
+        return $signature;    //  将微信的返回结果返回到客户端。
+    }
+    //  生成签名的私有方法
+    private function sign($wxOrder)
+    {
+        //  这里可以自己通过官方文档自己手写生成签名算法
+        //  微信支付SDK也提供一个直接生成签名的算法
+        //  调用微信支付SDK中的生成签名的算法
+        $jsApiPayData = new \WxPayJsApiPay();
+        //  配置当前小程序APPID参数
+        $jsApiPayData->SetAppid(config('wxSetting.app_id'));
+        //  配置当前时间戳 time()函数生成时间戳(string)将时间戳强转为字符串
+        $jsApiPayData->SetTimeStamp((string)time());
+        //  定义生成随机字符串的方法
+        $rand = md5(time().mt_rand(0,1000));
+        //  配置随机字符串
+        $jsApiPayData->SetNonceStr($rand);
+        //  配置统一下单接口返回的prepay_id参数 注意格式！！！！！
+        $jsApiPayData->SetPackage('prepay_id='.$wxOrder['prepay_id']);
+        //  配置签名的算法
+        $jsApiPayData->SetSignType('md5');
+        //  先将上述参数调用SDK提供的生成结果方法生成客户端能用的结果
+        $rawValues = $jsApiPayData->GetValues();
+        //  生成签名 直接调用SDK中的生成签名方法
+        $sign = $jsApiPayData->MakeSign();
+        //  将签名也写入$rawValues结果中
+        $rawValues['paySign'] = $sign;
+        //  对SDK生成的rawValues参数进行过滤 现在返回的结果中appId参数客户端不需要使用
+        unset($rawValues['appId']);
+        //  结果返回给客户端
+        return $rawValues;
+    }
+
+    //  处理wxOrder中的相关数据
+    private function recordPreOrder($wxOrder)
+    {
+        //  先把$wxOrder下的prepay_id信息更新给订单表中当前订单的prepay_id字段
+        OrderModel::where('id','=',$this->orderID)->update([
+            'prepay_id' => $wxOrder['prepay_id']
+        ]);
+
     }
 
     //  对当前的订单进行其他检测

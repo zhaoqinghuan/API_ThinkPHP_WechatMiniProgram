@@ -17,3 +17,4 @@
 
 `/api/v1/order - 订单提交`<br>
 `/api/v1/pay/pre_order - 发起微信支付请求`<br>
+`/api/v1/pay/notify - 微信支付回调`<br>

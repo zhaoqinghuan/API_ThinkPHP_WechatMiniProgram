@@ -49,6 +49,11 @@ Route::post('api/:version/order','api/:version.Order/placeOrder');
 
 //  微信支付预订单发起接口
 Route::post('api/:version/pay/pre_order','api/:version.Pay/getPreOrder');
+//  微信支付支付结果回调接口
+Route::post('api/:version/pay/notify','api/:version.Pay/receiveNotify');
+//  微信支付支付结果回调调试接口
+Route::post('api/:version/pay/re_notify','api/:version.Pay/re_notify');
+
 
 
 

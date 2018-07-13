@@ -7,9 +7,9 @@
  */
 return [
     //  小程序注册时的app_id
-    'app_id' => 'xxxx',
+    'app_id' => 'wxd1e448653cdd5392',
     //  小程序注册时的app_secret
-    'app_secret' => 'xxxx',
+    'app_secret' => '65b1308a480e82a0f7f2c3ca8135b972',
     //  配置置换Code兑换open_id和session_key的Url路径
     //  这里有三个参数需要填入这里先用%s占位。
     'login_url' => "https://api.weixin.qq.com/sns/jscode2session?".

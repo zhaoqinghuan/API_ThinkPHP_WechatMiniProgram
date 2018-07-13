@@ -15,6 +15,11 @@
 
 `/api/:version/address  - 用户提交个人地址信息`<br>
 
-`/api/v1/order - 订单提交`<br>
-`/api/v1/pay/pre_order - 发起微信支付请求`<br>
-`/api/v1/pay/notify - 微信支付回调`<br>
+`/api/:version/order - 订单提交`<br>
+`/api/:version/order/:id - 获取订单详细数据`<br>
+`/api/:version/order/by_user - 分页获取当前用户的订单数据`<br>
+
+
+`/api/:version/pay/pre_order - 发起微信支付请求`<br>
+`/api/:version/pay/notify - 微信支付回调`<br>
+`/api/:version/pay/re_notify - 微信支付回调调试接口`<br>

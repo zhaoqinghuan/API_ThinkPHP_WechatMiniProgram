@@ -12,6 +12,7 @@
 `/api/:version/products/:id'  - 根据商品主键获取某一商品的详细信息`<br>
 
 `/api/:version/token/user  - 获取当前用户的token令牌`<br>
+`/api/:version/token/verify  - 对当前用户传递过来的Token进行检验是否合法`<br>
 
 `/api/:version/address  - 用户提交个人地址信息`<br>
 

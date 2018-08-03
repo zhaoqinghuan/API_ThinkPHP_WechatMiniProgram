@@ -14,7 +14,7 @@ class AddressNew extends BaseValidate
     //  定义验证字段以及验证条件
     protected $rule = [
         'name' => 'require|isNotEmpty',
-        'mobile' => 'require|isMobile',
+        'mobile' => 'require',
         'province' => 'require|isNotEmpty',
         'city' => 'require|isNotEmpty',
         'country' => 'require|isNotEmpty',

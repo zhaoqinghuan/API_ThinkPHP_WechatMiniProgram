@@ -13,6 +13,7 @@ use app\api\lib\exception\SuccessMessage;
 use app\api\lib\exception\TokenException;
 use app\api\lib\exception\UserException;
 use app\api\model\User as UserModel;
+use app\api\model\UserAddress;
 use app\api\validate\AddressNew;
 use app\api\service\UserToken as TokenService;
 
@@ -23,7 +24,7 @@ class Address extends BaseController
         //  前置方法名
         'checkPrimaryScope' => [
             //  需要使用前置方法的方法名
-            'only' => 'createOrUpdateAddress'
+            'only' => 'createOrUpdateAddress,getUserAddress'
         ]
     ];
 
@@ -53,6 +54,20 @@ class Address extends BaseController
 //        }
 //    }
 
+    //  获取用户地址信息方法
+    public function getUserAddress()
+    {
+        $uid = TokenService::getCurrentUid();   //  调用Token类下定义的获取根据Token获取用户UID的方法获取用户UID
+        $userAddress = UserAddress::where('user_id', $uid)->find();
+
+        if(!$userAddress){
+            throw new UserException([
+                'msg' => '当前用户地址不存在',
+                'errorCode' => 60001
+            ]);
+        }
+        return $userAddress;
+    }
 
     //  创建/更新地址控制器
     public function createOrUpdateAddress()

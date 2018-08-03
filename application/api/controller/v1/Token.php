@@ -9,14 +9,36 @@
 namespace app\api\controller\v1;
 
 
+use app\api\lib\exception\ParameterException;
+use app\api\service\BaseService;
 use app\api\service\UserToken;
 use app\api\validate\TokenGet;
 
 class Token
 {
     /**
+     *  令牌校验方法
+     *  @params
+     *      $token   { String }  客户端提交的待检验令牌
+     */
+    public function verifyToken($token=''){
+        //  对Token进行校验，直接校验不写验证器
+        if(!$token){
+            throw new ParameterException([
+                'Token不能为空'
+            ]);
+        }
+        //  调用Service层的检测token的方法对Token进行检测
+        $valid = BaseService::verifyToken($token);
+        //  返回结果
+        return [
+            'isValid' => $valid
+        ];
+    }
+
+    /**
      *  创建获取令牌的方法
-     *  @param      $code integer
+     *  @params      $code integer
      *  @url        /token/user
      *  @http       POST
      *  @return     $userToken
@@ -35,4 +57,5 @@ class Token
             'token' => $userToken
         ];
     }
+
 }

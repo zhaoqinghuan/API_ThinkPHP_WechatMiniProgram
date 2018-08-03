@@ -16,6 +16,17 @@ use think\Request;
 
 class BaseService
 {
+    /**
+     *  自定义检测Token是否有效
+     */
+    public static function verifyToken($token){
+        $exist = Cache::get($token);    //  从缓存中获取是否存在一个名为Token的缓存
+        if($exist){
+            return true;                //  存在返回true
+        }else{
+            return false;               //  否则返回False
+        }
+    }
 
     /**
      *  检测当前发起操作的用户和当前数据的创建用户是否是同一个人

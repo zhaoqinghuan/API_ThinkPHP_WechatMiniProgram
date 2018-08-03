@@ -40,9 +40,13 @@ Route::get('api/:version/category/all','api/:version.Category/getAllCategories')
 //  获取令牌接口
 //  这里使用post请求方法因为客户端传递的code的特殊性直接放在url中不安全，
 Route::post('api/:version/token/user','api/:version.Token/getToken');
+//  校验令牌方法
+Route::post('api/:version/token/verify','api/:version.Token/verifyToken');
 
 //  用户创建或更新地址信息方法
 Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');
+//  获取当前用户对应的地址信息
+Route::get('api/:version/address','api/:version.Address/getUserAddress');
 
 //  根据订单ID获取当前订单的详细数据   直接在路由中对参数进行正则判断
 Route::get('api/:version/order/:id','api/:version.Order/getDetail',[],['id'=>'\d+']);
